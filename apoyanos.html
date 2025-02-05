@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Botón Apóyanos</title>
+</head>
+<body>
+  <div class="container">
+    <h2>¡Apóyanos!</h2>
+    <p>Selecciona un monto para apoyar y deja tu comentario.</p>
+    
+    <div class="input-group">
+      <label for="monto">Monto de apoyo:</label>
+      <input type="number" id="monto" min="1" placeholder="Introduce el monto" required>
+      <div id="monto-error" class="error-message"></div>
+    </div>
+
+    <div class="input-group">
+      <label for="comentario">Coméntanos lo que quieras (máximo 200 caracteres):</label>
+      <textarea id="comentario" maxlength="200" placeholder="Escribe tu comentario aquí..."></textarea>
+      <div id="comentario-error" class="error-message"></div>
+    </div>
+
+    <button class="apoyanos-btn" id="apoyanos-btn">Apóyanos</button>
+
+    <div id="form-section" class="form-section hidden">
+      <h3>Información de pago</h3>
+      
+      <div class="input-group">
+        <label for="nombre">Nombre completo:</label>
+        <input type="text" id="nombre" placeholder="Tu nombre completo" required>
+      </div>
+
+      <div class="input-group">
+        <label for="tarjeta">Número de tarjeta de crédito:</label>
+        <input type="text" id="tarjeta" placeholder="xxxx-xxxx-xxxx-xxxx" maxlength="19" required>
+      </div>
+
+      <div class="input-group">
+        <label for="fecha-vencimiento">Fecha de vencimiento:</label>
+        <input type="month" id="fecha-vencimiento" required>
+      </div>
+
+      <div class="input-group">
+        <label for="codigo-seguridad">Código de seguridad:</label>
+        <input type="password" id="codigo-seguridad" maxlength="3" placeholder="xxx" required>
+      </div>
+
+      <button class="apoyanos-btn" id="confirmar-btn">Confirmar pago</button>
+    </div>
+  </div>
+
+  <script>
+    class ApoyoForm {
+      constructor() {
+        this.montoInput = document.getElementById('monto');
+        this.comentarioInput = document.getElementById('comentario');
+        this.montoError = document.getElementById('monto-error');
+        this.comentarioError = document.getElementById('comentario-error');
+        this.formSection = document.getElementById('form-section');
+        this.apoyanosBtn = document.getElementById('apoyanos-btn');
+        this.confirmarBtn = document.getElementById('confirmar-btn');
+
+        this.nombreInput = document.getElementById('nombre');
+        this.tarjetaInput = document.getElementById('tarjeta');
+        this.fechaVencimientoInput = document.getElementById('fecha-vencimiento');
+        this.codigoSeguridadInput = document.getElementById('codigo-seguridad');
+
+        this.apoyanosBtn.addEventListener('click', () => this.validarEntrada());
+        this.confirmarBtn.addEventListener('click', () => this.confirmarPago());
+      }
+
+      validarEntrada() {
+        const monto = this.montoInput.value;
+        const comentario = this.comentarioInput.value;
+        let valido = true;
+
+        if (!monto || monto <= 0) {
+          this.montoError.textContent = "Por favor, ingresa un monto válido.";
+          valido = false;
+        } else {
+          this.montoError.textContent = "";
+        }
+
+        if (comentario.length > 200) {
+          this.comentarioError.textContent = "El comentario no debe exceder los 200 caracteres.";
+          valido = false;
+        } else {
+          this.comentarioError.textContent = "";
+        }
+
+        if (valido) {
+          this.mostrarFormularioPago();
+        }
+      }
+
+      mostrarFormularioPago() {
+        this.formSection.classList.remove('hidden');
+      }
+
+      confirmarPago() {
+        const nombre = this.nombreInput.value;
+        const tarjeta = this.tarjetaInput.value;
+        const fechaVencimiento = this.fechaVencimientoInput.value;
+        const codigoSeguridad = this.codigoSeguridadInput.value;
+        const monto = this.montoInput.value;
+
+        if (nombre && tarjeta && fechaVencimiento && codigoSeguridad) {
+          const confirmacion = confirm(`¿Estás seguro de que deseas realizar el pago de ${monto} con los siguientes datos?\nNombre: ${nombre}\nNúmero de tarjeta: ${tarjeta}\nFecha de vencimiento: ${fechaVencimiento}`);
+          
+          if (confirmacion) {
+            alert(`Gracias, ${nombre}, por tu apoyo de ${monto}!`);
+          } else {
+            alert("El pago ha sido cancelado.");
+          }
+        } else {
+          alert("Por favor, completa todos los campos de pago.");
+        }
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      new ApoyoForm();
+    });
+  </script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
+      margin: 0;
+    }
+
+    .container {
+      text-align: center;
+      background-color: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      width: 400px;
+    }
+
+    .apoyanos-btn {
+      padding: 15px 30px;
+      font-size: 18px;
+      color: #fff;
+      background-color: #28a745;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .apoyanos-btn:hover {
+      background-color: #218838;
+    }
+
+    .input-group {
+      margin: 20px 0;
+    }
+
+    label {
+      font-size: 16px;
+    }
+
+    input, textarea {
+      padding: 10px;
+      width: 100%;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+      margin-top: 5px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .form-section {
+      margin-top: 20px;
+      padding: 20px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+    }
+  </style>
+</body>
+</html>

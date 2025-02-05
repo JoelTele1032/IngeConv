@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Densidad</title>
+    <link rel="stylesheet" href="styleconversores.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Densidad</h1>
+        
+        <label for="fromUnit">Selecciona la unidad de origen:</label>
+        <select id="fromUnit">
+            <option value="kg/m3">Kilogramos por metro cúbico (kg/m³)</option>
+            <option value="g/cm3">Gramos por centímetro cúbico (g/cm³)</option>
+            <option value="g/m3">Gramos por metro cúbico (g/m³)</option>
+            <option value="lb/ft3">Libras por pie cúbico (lb/ft³)</option>
+            <option value="oz/in3">Onzas por pulgada cúbica (oz/in³)</option>
+        </select>
+
+        <label for="toUnit">Selecciona la unidad de destino:</label>
+        <select id="toUnit">
+            <option value="kg/m3">Kilogramos por metro cúbico (kg/m³)</option>
+            <option value="g/cm3">Gramos por centímetro cúbico (g/cm³)</option>
+            <option value="g/m3">Gramos por metro cúbico (g/m³)</option>
+            <option value="lb/ft3">Libras por pie cúbico (lb/ft³)</option>
+            <option value="oz/in3">Onzas por pulgada cúbica (oz/in³)</option>
+        </select>
+
+        <br>
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        const conversionRates = {
+            'kg/m3': {
+                'g/cm3': 0.001,
+                'g/m3': 1000,
+                'lb/ft3': 0.06243,
+                'oz/in3': 0.036127
+            },
+            'g/cm3': {
+                'kg/m3': 1000,
+                'g/m3': 1000000,
+                'lb/ft3': 62.43,
+                'oz/in3': 36.127
+            },
+            'g/m3': {
+                'kg/m3': 0.001,
+                'g/cm3': 0.000001,
+                'lb/ft3': 0.00006243,
+                'oz/in3': 0.000036127
+            },
+            'lb/ft3': {
+                'kg/m3': 16.0185,
+                'g/cm3': 0.027016,
+                'g/m3': 16018.5,
+                'oz/in3': 0.5778
+            },
+            'oz/in3': {
+                'kg/m3': 27.6849,
+                'g/cm3': 0.0276849,
+                'g/m3': 27684.9,
+                'lb/ft3': 1.732
+            }
+        };
+
+        const unitLabels = {
+            'kg/m3': "kg/m³",
+            'g/cm3': "g/cm³",
+            'g/m3': "g/m³",
+            'lb/ft3': "lb/ft³",
+            'oz/in3': "oz/in³"
+        };
+
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            const result = value * conversionRates[fromUnit][toUnit];
+            document.getElementById("result").textContent = `${result} ${unitLabels[toUnit]}`;
+        }
+    </script>
+
+</body>
+</html>

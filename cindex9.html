@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Energía</title>
+    <link rel="stylesheet" href="styleconversores.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Energía</h1>
+        
+        <label for="fromUnit">Selecciona la unidad de origen:</label>
+        <select id="fromUnit">
+            <option value="joule">Joule (J)</option>
+            <option value="kilojoule">Kilojoule (kJ)</option>
+            <option value="caloria">Caloría (cal)</option>
+            <option value="kilocaloria">Kilocaloría (kcal)</option>
+            <option value="electronvolt">Electronvolt (eV)</option>
+            <option value="wh">Vatio-hora (Wh)</option>
+            <option value="kwh">Kilovatio-hora (kWh)</option>
+        </select>
+
+        <label for="toUnit">Selecciona la unidad de destino:</label>
+        <select id="toUnit">
+            <option value="joule">Joule (J)</option>
+            <option value="kilojoule">Kilojoule (kJ)</option>
+            <option value="caloria">Caloría (cal)</option>
+            <option value="kilocaloria">Kilocaloría (kcal)</option>
+            <option value="electronvolt">Electronvolt (eV)</option>
+            <option value="wh">Vatio-hora (Wh)</option>
+            <option value="kwh">Kilovatio-hora (kWh)</option>
+        </select>
+
+        <br>
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        const conversionRates = {
+            joule: {
+                kilojoule: 0.001,
+                caloria: 0.239006,
+                kilocaloria: 0.000239006,
+                electronvolt: 6.242e+18,
+                wh: 0.000277778,
+                kwh: 0.000000277778
+            },
+            kilojoule: {
+                joule: 1000,
+                caloria: 239.006,
+                kilocaloria: 0.239006,
+                electronvolt: 6.242e+21,
+                wh: 0.277778,
+                kwh: 0.000277778
+            },
+            caloria: {
+                joule: 4.184,
+                kilojoule: 0.004184,
+                kilocaloria: 0.001,
+                electronvolt: 2.611e+19,
+                wh: 0.00116222,
+                kwh: 0.00000116222
+            },
+            kilocaloria: {
+                joule: 4184,
+                kilojoule: 4.184,
+                caloria: 1000,
+                electronvolt: 2.611e+22,
+                wh: 1.16222,
+                kwh: 0.00116222
+            },
+            electronvolt: {
+                joule: 1.602e-19,
+                kilojoule: 1.602e-22,
+                caloria: 3.826e-20,
+                kilocaloria: 3.826e-23,
+                wh: 4.450e-23,
+                kwh: 4.450e-26
+            },
+            wh: {
+                joule: 3600,
+                kilojoule: 3.6,
+                caloria: 860.421,
+                kilocaloria: 0.860421,
+                electronvolt: 2.247e+22,
+                kwh: 0.001
+            },
+            kwh: {
+                joule: 3600000,
+                kilojoule: 3600,
+                caloria: 860421,
+                kilocaloria: 860.421,
+                electronvolt: 2.247e+25,
+                wh: 1000
+            }
+        };
+
+        const unitLabels = {
+            joule: "J",
+            kilojoule: "kJ",
+            caloria: "cal",
+            kilocaloria: "kcal",
+            electronvolt: "eV",
+            wh: "Wh",
+            kwh: "kWh"
+        };
+
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            const result = value * conversionRates[fromUnit][toUnit];
+            document.getElementById("result").textContent = `${result} ${unitLabels[toUnit]}`;
+        }
+    </script>
+
+</body>
+</html>

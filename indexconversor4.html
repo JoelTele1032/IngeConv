@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Corriente Eléctrica - Sistema Internacional</title>
+    <link rel="stylesheet" href="styleconversores.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Corriente Eléctrica - Sistema Internacional</h1>
+        
+        <label for="fromUnit">Selecciona la unidad de origen:</label>
+        <select id="fromUnit">
+            <option value="amperes">Amperios (A)</option>
+            <option value="milliampere">Milliamperios (mA)</option>
+            <option value="microampere">Microamperios (µA)</option>
+            <option value="nanoampere">Nanoamperios (nA)</option>
+            <option value="picoampere">Picoamperios (pA)</option>
+            <option value="kiloampere">Kiloamperios (kA)</option>
+        </select>
+
+        <label for="toUnit">Selecciona la unidad de destino:</label>
+        <select id="toUnit">
+            <option value="amperes">Amperios (A)</option>
+            <option value="milliampere">Milliamperios (mA)</option>
+            <option value="microampere">Microamperios (µA)</option>
+            <option value="nanoampere">Nanoamperios (nA)</option>
+            <option value="picoampere">Picoamperios (pA)</option>
+            <option value="kiloampere">Kiloamperios (kA)</option>
+        </select>
+
+        <br>
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        const conversionRates = {
+            amperes: {
+                milliampere: 1000,
+                microampere: 1000000,
+                nanoampere: 1000000000,
+                picoampere: 1000000000000,
+                kiloampere: 0.001
+            },
+            milliampere: {
+                amperes: 0.001,
+                microampere: 1000,
+                nanoampere: 1000000,
+                picoampere: 1000000000,
+                kiloampere: 0.000001
+            },
+            microampere: {
+                amperes: 0.000001,
+                milliampere: 0.001,
+                nanoampere: 1000,
+                picoampere: 1000000,
+                kiloampere: 0.000000001
+            },
+            nanoampere: {
+                amperes: 0.000000001,
+                milliampere: 0.000001,
+                microampere: 0.001,
+                picoampere: 1000,
+                kiloampere: 0.000000000001
+            },
+            picoampere: {
+                amperes: 0.000000000001,
+                milliampere: 0.000000001,
+                microampere: 0.000001,
+                nanoampere: 0.001,
+                kiloampere: 0.000000000000001
+            },
+            kiloampere: {
+                amperes: 1000,
+                milliampere: 1000000,
+                microampere: 1000000000,
+                nanoampere: 1000000000000,
+                picoampere: 1000000000000000
+            }
+        };
+
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            const result = value * conversionRates[fromUnit][toUnit];
+            document.getElementById("result").textContent = result;
+        }
+    </script>
+
+</body>
+</html>

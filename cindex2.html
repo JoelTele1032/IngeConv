@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Longitud - Sistema Internacional</title>
+    <link rel="stylesheet" href="styleconversores.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f0f0f0;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 600px;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            text-align: center;
+        }
+        h1 {
+            color: #007bff;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        select, input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result-box {
+            margin-top: 20px;
+            background-color: #e6f7ff;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 20px;
+            color: #005580;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Longitud - Sistema Internacional</h1>
+        
+        <label for="fromUnit">Selecciona la unidad de origen:</label>
+        <select id="fromUnit">
+            <option value="kilometers">Kilómetros (km)</option>
+            <option value="hectometers">Hectómetros (hm)</option>
+            <option value="decameters">Decámetros (dam)</option>
+            <option value="meters">Metros (m)</option>
+            <option value="decimeters">Decímetros (dm)</option>
+            <option value="centimeters">Centímetros (cm)</option>
+            <option value="millimeters">Milímetros (mm)</option>
+            <option value="micrometers">Micrómetros (µm)</option>
+            <option value="nanometers">Nanómetros (nm)</option>
+        </select>
+
+        <label for="toUnit">Selecciona la unidad de destino:</label>
+        <select id="toUnit">
+            <option value="kilometers">Kilómetros (km)</option>
+            <option value="hectometers">Hectómetros (hm)</option>
+            <option value="decameters">Decámetros (dam)</option>
+            <option value="meters">Metros (m)</option>
+            <option value="decimeters">Decímetros (dm)</option>
+            <option value="centimeters">Centímetros (cm)</option>
+            <option value="millimeters">Milímetros (mm)</option>
+            <option value="micrometers">Micrómetros (µm)</option>
+            <option value="nanometers">Nanómetros (nm)</option>
+        </select>
+
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        const conversionRates = {
+            kilometers: { hectometers: 10, decameters: 100, meters: 1000, decimeters: 10000, centimeters: 100000, millimeters: 1000000, micrometers: 1000000000, nanometers: 10000000000 },
+            hectometers: { kilometers: 0.1, decameters: 10, meters: 100, decimeters: 1000, centimeters: 10000, millimeters: 100000, micrometers: 100000000, nanometers: 1000000000 },
+            decameters: { kilometers: 0.01, hectometers: 0.1, meters: 10, decimeters: 100, centimeters: 1000, millimeters: 10000, micrometers: 10000000, nanometers: 100000000 },
+            meters: { kilometers: 0.001, hectometers: 0.01, decameters: 0.1, decimeters: 10, centimeters: 100, millimeters: 1000, micrometers: 1000000, nanometers: 10000000 },
+            decimeters: { kilometers: 0.0001, hectometers: 0.001, decameters: 0.01, meters: 0.1, centimeters: 10, millimeters: 100, micrometers: 100000, nanometers: 1000000 },
+            centimeters: { kilometers: 0.00001, hectometers: 0.0001, decameters: 0.001, meters: 0.01, decimeters: 0.1, millimeters: 10, micrometers: 10000, nanometers: 100000 },
+            millimeters: { kilometers: 0.000001, hectometers: 0.00001, decameters: 0.0001, meters: 0.001, decimeters: 0.01, centimeters: 0.1, micrometers: 1000, nanometers: 10000 },
+            micrometers: { kilometers: 0.000000001, hectometers: 0.00000001, decameters: 0.0000001, meters: 0.000001, decimeters: 0.00001, centimeters: 0.0001, millimeters: 0.001, nanometers: 1000 },
+            nanometers: { kilometers: 0.0000000001, hectometers: 0.000000001, decameters: 0.00000001, meters: 0.0000001, decimeters: 0.000001, centimeters: 0.00001, millimeters: 0.0001, micrometers: 0.001 }
+        };
+
+        const unitAbbreviations = {
+            kilometers: "km", hectometers: "hm", decameters: "dam", meters: "m", decimeters: "dm", centimeters: "cm", millimeters: "mm", micrometers: "µm", nanometers: "nm"
+        };
+
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            const result = value * conversionRates[fromUnit][toUnit];
+            const resultWithUnit = result + " " + unitAbbreviations[toUnit];
+            document.getElementById("result").textContent = resultWithUnit;
+        }
+    </script>
+
+</body>
+</html>

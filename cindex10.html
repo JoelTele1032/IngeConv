@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Potencia</title>
+    <link rel="stylesheet" href="styleconversores.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Potencia</h1>
+        
+        <label for="fromUnit">Selecciona la unidad de origen:</label>
+        <select id="fromUnit">
+            <option value="watt">Watt (W)</option>
+            <option value="kilowatt">Kilowatt (kW)</option>
+            <option value="megawatt">Megawatt (MW)</option>
+            <option value="horsepower">Caballo de fuerza (hp)</option>
+            <option value="btu_h">BTU/h</option>
+        </select>
+
+        <label for="toUnit">Selecciona la unidad de destino:</label>
+        <select id="toUnit">
+            <option value="watt">Watt (W)</option>
+            <option value="kilowatt">Kilowatt (kW)</option>
+            <option value="megawatt">Megawatt (MW)</option>
+            <option value="horsepower">Caballo de fuerza (hp)</option>
+            <option value="btu_h">BTU/h</option>
+        </select>
+
+        <br>
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        const conversionRates = {
+            watt: {
+                kilowatt: 0.001,
+                megawatt: 0.000001,
+                horsepower: 0.00134102,
+                btu_h: 3.41214
+            },
+            kilowatt: {
+                watt: 1000,
+                megawatt: 0.001,
+                horsepower: 1.34102,
+                btu_h: 3412.14
+            },
+            megawatt: {
+                watt: 1000000,
+                kilowatt: 1000,
+                horsepower: 1341.02,
+                btu_h: 3412140
+            },
+            horsepower: {
+                watt: 745.7,
+                kilowatt: 0.7457,
+                megawatt: 0.0007457,
+                btu_h: 2544.43
+            },
+            btu_h: {
+                watt: 0.293071,
+                kilowatt: 0.000293071,
+                megawatt: 0.000000293071,
+                horsepower: 0.000393014
+            }
+        };
+
+        const unitLabels = {
+            watt: "W",
+            kilowatt: "kW",
+            megawatt: "MW",
+            horsepower: "hp",
+            btu_h: "BTU/h"
+        };
+
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            const result = value * conversionRates[fromUnit][toUnit];
+            document.getElementById("result").textContent = `${result} ${unitLabels[toUnit]}`;
+        }
+    </script>
+
+</body>
+</html>

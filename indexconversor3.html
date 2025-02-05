@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Tiempo - Sistema Internacional</title>
+    <link rel="stylesheet" href="styleconversores.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Tiempo - Sistema Internacional</h1>
+        
+        <label for="fromUnit">Selecciona la unidad de origen:</label>
+        <select id="fromUnit">
+            <option value="seconds">Segundos (s)</option>
+            <option value="minutes">Minutos (min)</option>
+            <option value="hours">Horas (h)</option>
+            <option value="days">Días (d)</option>
+            <option value="weeks">Semanas (wk)</option>
+            <option value="months">Meses (mo)</option>
+            <option value="years">Años (y)</option>
+        </select>
+
+        <label for="toUnit">Selecciona la unidad de destino:</label>
+        <select id="toUnit">
+            <option value="seconds">Segundos (s)</option>
+            <option value="minutes">Minutos (min)</option>
+            <option value="hours">Horas (h)</option>
+            <option value="days">Días (d)</option>
+            <option value="weeks">Semanas (wk)</option>
+            <option value="months">Meses (mo)</option>
+            <option value="years">Años (y)</option>
+        </select>
+
+        <br>
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        const conversionRates = {
+            seconds: { minutes: 1 / 60, hours: 1 / 3600, days: 1 / 86400, weeks: 1 / 604800, months: 1 / 2628000, years: 1 / 31536000 },
+            minutes: { seconds: 60, hours: 1 / 60, days: 1 / 1440, weeks: 1 / 10080, months: 1 / 43800, years: 1 / 525600 },
+            hours: { seconds: 3600, minutes: 60, days: 1 / 24, weeks: 1 / 168, months: 1 / 730, years: 1 / 8760 },
+            days: { seconds: 86400, minutes: 1440, hours: 24, weeks: 1 / 7, months: 1 / 30.44, years: 1 / 365 },
+            weeks: { seconds: 604800, minutes: 10080, hours: 168, days: 7, months: 1 / 4.345, years: 1 / 52.143 },
+            months: { seconds: 2628000, minutes: 43800, hours: 730, days: 30.44, weeks: 4.345, years: 1 / 12 },
+            years: { seconds: 31536000, minutes: 525600, hours: 8760, days: 365, weeks: 52.143, months: 12 }
+        };
+
+        const unitSymbols = {
+            seconds: "s", minutes: "min", hours: "h", days: "d", weeks: "wk", months: "mo", years: "y"
+        };
+
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            const result = (value * conversionRates[fromUnit][toUnit]).toFixed(2);
+            document.getElementById("result").textContent = `${result} ${unitSymbols[toUnit]}`;
+        }
+    </script>
+
+</body>
+</html>

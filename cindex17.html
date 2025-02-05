@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Masa</title>
+    <link rel="stylesheet" href="styleconversores.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Masa</h1>
+        
+        <label for="fromUnit">Selecciona la unidad de origen:</label>
+        <select id="fromUnit">
+            <option value="kilograms">Kilogramos (kg)</option>
+            <option value="grams">Gramos (g)</option>
+            <option value="milligrams">Miligramos (mg)</option>
+            <option value="micrograms">Microgramos (µg)</option>
+            <option value="tons">Toneladas (t)</option>
+            <option value="pounds">Libras (lbs)</option>
+        </select>
+
+        <label for="toUnit">Selecciona la unidad de destino:</label>
+        <select id="toUnit">
+            <option value="kilograms">Kilogramos (kg)</option>
+            <option value="grams">Gramos (g)</option>
+            <option value="milligrams">Miligramos (mg)</option>
+            <option value="micrograms">Microgramos (µg)</option>
+            <option value="tons">Toneladas (t)</option>
+            <option value="pounds">Libras (lbs)</option>
+        </select>
+
+        <br>
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        const conversionRates = {
+            kilograms: {
+                grams: 1000,
+                milligrams: 1000000,
+                micrograms: 1000000000,
+                tons: 0.001,
+                pounds: 2.20462
+            },
+            grams: {
+                kilograms: 0.001,
+                milligrams: 1000,
+                micrograms: 1000000,
+                tons: 0.000001,
+                pounds: 0.00220462
+            },
+            milligrams: {
+                kilograms: 0.000001,
+                grams: 0.001,
+                micrograms: 1000,
+                tons: 0.000000001,
+                pounds: 0.00000220462
+            },
+            micrograms: {
+                kilograms: 0.000000001,
+                grams: 0.000001,
+                milligrams: 0.001,
+                tons: 0.000000000001,
+                pounds: 0.00000000220462
+            },
+            tons: {
+                kilograms: 1000,
+                grams: 1000000,
+                milligrams: 1000000000,
+                micrograms: 1000000000000,
+                pounds: 2204.62
+            },
+            pounds: {
+                kilograms: 0.453592,
+                grams: 453.592,
+                milligrams: 453592,
+                micrograms: 453592000,
+                tons: 0.000453592
+            }
+        };
+
+        const unitLabels = {
+            kilograms: "kg",
+            grams: "g",
+            milligrams: "mg",
+            micrograms: "µg",
+            tons: "t",
+            pounds: "lbs"
+        };
+
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            const result = value * conversionRates[fromUnit][toUnit];
+            document.getElementById("result").textContent = `${result} ${unitLabels[toUnit]}`;
+        }
+    </script>
+
+</body>
+</html>

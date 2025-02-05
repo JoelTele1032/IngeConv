@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Ancho de Banda</title>
+    <link rel="stylesheet" href="styleconversores.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Ancho de Banda</h1>
+        
+        <label for="fromUnit">Selecciona la unidad de origen:</label>
+        <select id="fromUnit">
+            <option value="bps">Bits por segundo (bps)</option>
+            <option value="kbps">Kilobits por segundo (Kbps)</option>
+            <option value="mbps">Megabits por segundo (Mbps)</option>
+            <option value="gbps">Gigabits por segundo (Gbps)</option>
+            <option value="tbps">Terabits por segundo (Tbps)</option>
+        </select>
+
+        <label for="toUnit">Selecciona la unidad de destino:</label>
+        <select id="toUnit">
+            <option value="bps">Bits por segundo (bps)</option>
+            <option value="kbps">Kilobits por segundo (Kbps)</option>
+            <option value="mbps">Megabits por segundo (Mbps)</option>
+            <option value="gbps">Gigabits por segundo (Gbps)</option>
+            <option value="tbps">Terabits por segundo (Tbps)</option>
+        </select>
+
+        <br>
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        const conversionRates = {
+            bps: {
+                kbps: 0.001,
+                mbps: 0.000001,
+                gbps: 0.000000001,
+                tbps: 0.000000000001
+            },
+            kbps: {
+                bps: 1000,
+                mbps: 0.001,
+                gbps: 0.000001,
+                tbps: 0.000000001
+            },
+            mbps: {
+                bps: 1000000,
+                kbps: 1000,
+                gbps: 0.001,
+                tbps: 0.000001
+            },
+            gbps: {
+                bps: 1000000000,
+                kbps: 1000000,
+                mbps: 1000,
+                tbps: 0.001
+            },
+            tbps: {
+                bps: 1000000000000,
+                kbps: 1000000000,
+                mbps: 1000000,
+                gbps: 1000
+            }
+        };
+
+        const unitLabels = {
+            bps: "bps",
+            kbps: "Kbps",
+            mbps: "Mbps",
+            gbps: "Gbps",
+            tbps: "Tbps"
+        };
+
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            const result = value * conversionRates[fromUnit][toUnit];
+            document.getElementById("result").textContent = `${result} ${unitLabels[toUnit]}`;
+        }
+    </script>
+
+</body>
+</html>

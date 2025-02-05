@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Temperatura</title>
+    <link rel="stylesheet" href="styleconversores.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Temperatura</h1>
+        
+        <label for="fromUnit">Selecciona la unidad de origen:</label>
+        <select id="fromUnit">
+            <option value="celsius">Celsius (°C)</option>
+            <option value="fahrenheit">Fahrenheit (°F)</option>
+            <option value="kelvin">Kelvin (K)</option>
+        </select>
+
+        <label for="toUnit">Selecciona la unidad de destino:</label>
+        <select id="toUnit">
+            <option value="celsius">Celsius (°C)</option>
+            <option value="fahrenheit">Fahrenheit (°F)</option>
+            <option value="kelvin">Kelvin (K)</option>
+        </select>
+
+        <br>
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            let result;
+
+            if (fromUnit === toUnit) {
+                result = value;
+            } else if (fromUnit === "celsius") {
+                if (toUnit === "fahrenheit") {
+                    result = (value * 9/5) + 32;
+                } else if (toUnit === "kelvin") {
+                    result = value + 273.15;
+                }
+            } else if (fromUnit === "fahrenheit") {
+                if (toUnit === "celsius") {
+                    result = (value - 32) * 5/9;
+                } else if (toUnit === "kelvin") {
+                    result = (value - 32) * 5/9 + 273.15;
+                }
+            } else if (fromUnit === "kelvin") {
+                if (toUnit === "celsius") {
+                    result = value - 273.15;
+                } else if (toUnit === "fahrenheit") {
+                    result = (value - 273.15) * 9/5 + 32;
+                }
+            }
+
+            document.getElementById("result").textContent = `${result} ${toUnit === "celsius" ? "°C" : toUnit === "fahrenheit" ? "°F" : "K"}`;
+        }
+    </script>
+
+</body>
+</html>

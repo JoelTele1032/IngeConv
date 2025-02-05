@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Campo Magnético</title>
+    <link rel="stylesheet" href="styleconversores.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Campo Magnético</h1>
+        
+        <label for="fromUnit">Selecciona la unidad de origen:</label>
+        <select id="fromUnit">
+            <option value="tesla">Tesla (T)</option>
+            <option value="gauss">Gauss (G)</option>
+            <option value="microtesla">Microtesla (µT)</option>
+            <option value="millitesla">Militesla (mT)</option>
+            <option value="weberm2">Weber por metro cuadrado (Wb/m²)</option>
+        </select>
+
+        <label for="toUnit">Selecciona la unidad de destino:</label>
+        <select id="toUnit">
+            <option value="tesla">Tesla (T)</option>
+            <option value="gauss">Gauss (G)</option>
+            <option value="microtesla">Microtesla (µT)</option>
+            <option value="millitesla">Militesla (mT)</option>
+            <option value="weberm2">Weber por metro cuadrado (Wb/m²)</option>
+        </select>
+
+        <br>
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        const conversionRates = {
+            tesla: {
+                gauss: 10000,
+                microtesla: 1000000,
+                millitesla: 1000,
+                weberm2: 1
+            },
+            gauss: {
+                tesla: 0.0001,
+                microtesla: 100,
+                millitesla: 0.1,
+                weberm2: 0.0001
+            },
+            microtesla: {
+                tesla: 0.000001,
+                gauss: 0.01,
+                millitesla: 0.001,
+                weberm2: 0.000001
+            },
+            millitesla: {
+                tesla: 0.001,
+                gauss: 10,
+                microtesla: 1000,
+                weberm2: 0.001
+            },
+            weberm2: {
+                tesla: 1,
+                gauss: 10000,
+                microtesla: 1000000,
+                millitesla: 1000
+            }
+        };
+
+        const unitLabels = {
+            tesla: "T",
+            gauss: "G",
+            microtesla: "µT",
+            millitesla: "mT",
+            weberm2: "Wb/m²"
+        };
+
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            const result = value * conversionRates[fromUnit][toUnit];
+            document.getElementById("result").textContent = `${result} ${unitLabels[toUnit]}`;
+        }
+    </script>
+
+</body>
+</html>

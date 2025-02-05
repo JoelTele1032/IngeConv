@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Área</title>
+    <link rel="stylesheet" href="styleconversores.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Área</h1>
+        
+        <label for="fromUnit">Selecciona la unidad de origen:</label>
+        <select id="fromUnit">
+            <option value="m2">Metros cuadrados (m²)</option>
+            <option value="km2">Kilómetros cuadrados (km²)</option>
+            <option value="cm2">Centímetros cuadrados (cm²)</option>
+            <option value="mm2">Milímetros cuadrados (mm²)</option>
+            <option value="ha">Hectáreas (ha)</option>
+            <option value="ac">Acres (ac)</option>
+        </select>
+
+        <label for="toUnit">Selecciona la unidad de destino:</label>
+        <select id="toUnit">
+            <option value="m2">Metros cuadrados (m²)</option>
+            <option value="km2">Kilómetros cuadrados (km²)</option>
+            <option value="cm2">Centímetros cuadrados (cm²)</option>
+            <option value="mm2">Milímetros cuadrados (mm²)</option>
+            <option value="ha">Hectáreas (ha)</option>
+            <option value="ac">Acres (ac)</option>
+        </select>
+
+        <br>
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        const conversionRates = {
+            m2: {
+                km2: 0.000001,
+                cm2: 10000,
+                mm2: 1000000,
+                ha: 0.0001,
+                ac: 0.000247105
+            },
+            km2: {
+                m2: 1000000,
+                cm2: 10000000000,
+                mm2: 1000000000000,
+                ha: 100,
+                ac: 247.105
+            },
+            cm2: {
+                m2: 0.0001,
+                km2: 0.0000000001,
+                mm2: 100,
+                ha: 0.00000001,
+                ac: 0.0000000247105
+            },
+            mm2: {
+                m2: 0.000001,
+                km2: 0.000000000001,
+                cm2: 0.01,
+                ha: 0.0000000001,
+                ac: 0.000000000247105
+            },
+            ha: {
+                m2: 10000,
+                km2: 0.01,
+                cm2: 100000000,
+                mm2: 10000000000,
+                ac: 2.47105
+            },
+            ac: {
+                m2: 4046.86,
+                km2: 0.00404686,
+                cm2: 40468600,
+                mm2: 4046860000,
+                ha: 0.404686
+            }
+        };
+
+        const unitLabels = {
+            m2: "m²",
+            km2: "km²",
+            cm2: "cm²",
+            mm2: "mm²",
+            ha: "ha",
+            ac: "ac"
+        };
+
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            const result = value * conversionRates[fromUnit][toUnit];
+            document.getElementById("result").textContent = `${result} ${unitLabels[toUnit]}`;
+        }
+    </script>
+
+</body>
+</html>

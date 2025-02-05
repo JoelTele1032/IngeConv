@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactividad sin JavaScript</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .contenedor {
+            width: 80%;
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            color: #2d3e50;
+            margin-bottom: 30px;
+        }
+
+        .acordeon {
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+            padding: 20px;
+            border: none;
+            text-align: left;
+            width: 100%;
+            font-size: 20px;
+            border-radius: 8px;
+            transition: 0.3s;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .acordeon:hover {
+            background-color: #0056b3;
+        }
+
+        input[type="checkbox"] {
+            display: none;
+        }
+
+        .contenido {
+            display: none;
+            padding: 20px;
+            margin-top: 10px;
+            background-color: #f1f1f1;
+            border-radius: 8px;
+        }
+
+        input[type="checkbox"]:checked + .acordeon + .contenido {
+            display: block;
+            animation: slide-down 0.3s ease-out;
+        }
+        @keyframes slide-down {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .contenido p {
+            font-size: 16px;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .imagen {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="contenedor">
+        <h1>Información sobre Ingeniería y Unidades de Conversión</h1>
+        <input type="checkbox" id="seccion7">
+        <label for="seccion7" class="acordeon">Múltiplos y Submúltiplos</label>
+        <div class="contenido">
+            <p>Los múltiplos y submúltiplos son prefijos utilizados para representar cantidades mayores o menores de una unidad base. Por ejemplo, el kilómetro (km) es un múltiplo del metro (m), y el milímetro (mm) es un submúltiplo.</p>
+            <img src="multiplos.png" alt="Tabla de Múltiplos y Submúltiplos" class="imagen">
+        
+        </div>
+        <input type="checkbox" id="seccion5">
+        <label for="seccion5" class="acordeon">¿Qué son las unidades de conversión?</label>
+        <div class="contenido">
+            <p>Las unidades de conversión son factores utilizados para cambiar una cantidad de una unidad de medida a otra. Por ejemplo, convertir metros a kilómetros o gramos a kilogramos.</p>
+        </div>
+
+        <input type="checkbox" id="seccion6">
+        <label for="seccion6" class="acordeon">Sistema Internacional de Unidades (SI)</label>
+        <div class="contenido">
+            <p>El Sistema Internacional de Unidades (SI) es el sistema de medición más utilizado en el mundo. Sus unidades base incluyen el metro (m), kilogramo (kg), segundo (s), amperio (A), kelvin (K) y mol (mol).</p>
+        </div>
+        <input type="checkbox" id="seccion1">
+        <label for="seccion1" class="acordeon">¿Qué es la ingeniería?</label>
+        <div class="contenido">
+            <p>La ingeniería es la disciplina que aplica principios científicos y matemáticos para diseñar, construir y optimizar estructuras, máquinas, sistemas y procesos que mejoran la vida humana.</p>
+        </div>
+
+        <input type="checkbox" id="seccion2">
+        <label for="seccion2" class="acordeon">Historia de la ingeniería</label>
+        <div class="contenido">
+            <p>La ingeniería ha evolucionado desde la construcción de pirámides y acueductos en la antigüedad hasta las tecnologías modernas como la inteligencia artificial y la exploración espacial.</p>
+        </div>
+
+        <input type="checkbox" id="seccion3">
+        <label for="seccion3" class="acordeon">Ramas de la ingeniería</label>
+        <div class="contenido">
+            <p>La ingeniería se divide en diversas ramas, como civil, mecánica, eléctrica, industrial, química, informática y biomédica. Cada una se enfoca en distintos problemas y soluciones tecnológicas.</p>
+        </div>
+
+        <input type="checkbox" id="seccion4">
+        <label for="seccion4" class="acordeon">Tecnologías en ingeniería</label>
+        <div class="contenido">
+            <p>Las tecnologías en ingeniería incluyen impresión 3D, automatización, nanotecnología, robótica y energías renovables, que permiten innovaciones en múltiples sectores industriales.</p>
+        </div>
+
+
+    </div>
+
+</body>
+</html>

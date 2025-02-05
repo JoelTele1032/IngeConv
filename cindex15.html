@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Flujo Magnético</title>
+    <link rel="stylesheet" href="styleconversores.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Flujo Magnético</h1>
+        
+        <label for="fromUnit">Selecciona la unidad de origen:</label>
+        <select id="fromUnit">
+            <option value="weber">Weber (Wb)</option>
+            <option value="milliweber">Milliweber (mWb)</option>
+            <option value="microWeber">MicroWeber (µWb)</option>
+            <option value="maxwell">Maxwell (Mx)</option>
+            <option value="teslam2">Tesla metro cuadrado (T·m²)</option>
+        </select>
+
+        <label for="toUnit">Selecciona la unidad de destino:</label>
+        <select id="toUnit">
+            <option value="weber">Weber (Wb)</option>
+            <option value="milliweber">Milliweber (mWb)</option>
+            <option value="microWeber">MicroWeber (µWb)</option>
+            <option value="maxwell">Maxwell (Mx)</option>
+            <option value="teslam2">Tesla metro cuadrado (T·m²)</option>
+        </select>
+
+        <br>
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        const conversionRates = {
+            weber: {
+                milliweber: 1000,
+                microWeber: 1000000,
+                maxwell: 100000000,
+                teslam2: 1
+            },
+            milliweber: {
+                weber: 0.001,
+                microWeber: 1000,
+                maxwell: 100000,
+                teslam2: 0.001
+            },
+            microWeber: {
+                weber: 0.000001,
+                milliweber: 0.001,
+                maxwell: 100,
+                teslam2: 0.000001
+            },
+            maxwell: {
+                weber: 0.00000001,
+                milliweber: 0.00001,
+                microWeber: 0.01,
+                teslam2: 0.00000001
+            },
+            teslam2: {
+                weber: 1,
+                milliweber: 1000,
+                microWeber: 1000000,
+                maxwell: 100000000
+            }
+        };
+
+        const unitLabels = {
+            weber: "Wb",
+            milliweber: "mWb",
+            microWeber: "µWb",
+            maxwell: "Mx",
+            teslam2: "T·m²"
+        };
+
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            const result = value * conversionRates[fromUnit][toUnit];
+            document.getElementById("result").textContent = `${result} ${unitLabels[toUnit]}`;
+        }
+    </script>
+
+</body>
+</html>

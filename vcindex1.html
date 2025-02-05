@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Monedas</title>
+    <link rel="stylesheet" href="styleconversores.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Monedas</h1>
+        
+        <label for="fromUnit">Selecciona la moneda de origen:</label>
+        <select id="fromUnit">
+            <option value="USD">Dólar estadounidense (USD)</option>
+            <option value="EUR">Euro (EUR)</option>
+            <option value="GBP">Libra esterlina (GBP)</option>
+            <option value="MXN">Peso mexicano (MXN)</option>
+            <option value="JPY">Yen japonés (JPY)</option>
+            <option value="COP">Peso colombiano (COP)</option>
+            <option value="CAD">Dólar canadiense (CAD)</option>
+            <option value="CNY">Yen chino (CNY)</option>
+            <option value="BRL">Real brasileño (BRL)</option>
+        </select>
+
+        <label for="toUnit">Selecciona la moneda de destino:</label>
+        <select id="toUnit">
+            <option value="USD">Dólar estadounidense (USD)</option>
+            <option value="EUR">Euro (EUR)</option>
+            <option value="GBP">Libra esterlina (GBP)</option>
+            <option value="MXN">Peso mexicano (MXN)</option>
+            <option value="JPY">Yen japonés (JPY)</option>
+            <option value="COP">Peso colombiano (COP)</option>
+            <option value="CAD">Dólar canadiense (CAD)</option>
+            <option value="CNY">Yen chino (CNY)</option>
+            <option value="BRL">Real brasileño (BRL)</option>
+        </select>
+
+        <br>
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        const conversionRates = {
+            'USD': {
+                'EUR': 0.92,
+                'GBP': 0.75,
+                'MXN': 18.0,
+                'JPY': 130.0,
+                'COP': 4000,
+                'CAD': 1.36,
+                'CNY': 7.2,
+                'BRL': 5.24,
+            },
+            'EUR': {
+                'USD': 1.09,
+                'GBP': 0.82,
+                'MXN': 19.57,
+                'JPY': 141.3,
+                'COP': 4350,
+                'CAD': 1.48,
+                'CNY': 7.83,
+                'BRL': 5.71,
+            },
+            'GBP': {
+                'USD': 1.33,
+                'EUR': 1.22,
+                'MXN': 23.93,
+                'JPY': 172.5,
+                'COP': 5230,
+                'CAD': 1.81,
+                'CNY': 9.55,
+                'BRL': 7.0,
+            },
+            'MXN': {
+                'USD': 0.055,
+                'EUR': 0.051,
+                'GBP': 0.042,
+                'JPY': 7.2,
+                'COP': 233.33,
+                'CAD': 0.074,
+                'CNY': 0.42,
+                'BRL': 0.22,
+            },
+            'JPY': {
+                'USD': 0.0077,
+                'EUR': 0.0071,
+                'GBP': 0.0058,
+                'MXN': 0.14,
+                'COP': 30.14,
+                'CAD': 0.01,
+                'CNY': 0.053,
+                'BRL': 0.038,
+            },
+            'COP': {
+                'USD': 0.00025,
+                'EUR': 0.00023,
+                'GBP': 0.00019,
+                'MXN': 0.0043,
+                'JPY': 0.033,
+                'CAD': 0.00031,
+                'CNY': 0.0012,
+                'BRL': 0.0012,
+            },
+            'CAD': {
+                'USD': 0.74,
+                'EUR': 0.68,
+                'GBP': 0.55,
+                'MXN': 13.6,
+                'JPY': 94.4,
+                'COP': 3200,
+                'CNY': 5.75,
+                'BRL': 3.83,
+            },
+            'CNY': {
+                'USD': 0.14,
+                'EUR': 0.13,
+                'GBP': 0.10,
+                'MXN': 2.37,
+                'JPY': 18.85,
+                'COP': 8000,
+                'CAD': 0.17,
+                'BRL': 0.67,
+            },
+            'BRL': {
+                'USD': 0.19,
+                'EUR': 0.18,
+                'GBP': 0.14,
+                'MXN': 4.5,
+                'JPY': 26.3,
+                'COP': 8500,
+                'CAD': 0.26,
+                'CNY': 1.49,
+            }
+        };
+
+        const unitLabels = {
+            'USD': "USD",
+            'EUR': "EUR",
+            'GBP': "GBP",
+            'MXN': "MXN",
+            'JPY': "JPY",
+            'COP': "COP",
+            'CAD': "CAD",
+            'CNY': "CNY",
+            'BRL': "BRL"
+        };
+
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            const result = value * conversionRates[fromUnit][toUnit];
+            document.getElementById("result").textContent = `${result} ${unitLabels[toUnit]}`;
+        }
+    </script>
+
+</body>
+</html>
+
+
+
+

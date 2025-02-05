@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Conductancia Eléctrica</title>
+    <link rel="stylesheet" href="styleconversores.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Conductancia Eléctrica</h1>
+        
+        <label for="fromUnit">Selecciona la unidad de origen:</label>
+        <select id="fromUnit">
+            <option value="siemens">Siemens (S)</option>
+            <option value="milisiemens">Milisiemens (mS)</option>
+            <option value="microsiemens">Microsiemens (µS)</option>
+            <option value="nanosiemens">Nanosiemens (nS)</option>
+            <option value="picosiemens">Picosiemens (pS)</option>
+        </select>
+
+        <label for="toUnit">Selecciona la unidad de destino:</label>
+        <select id="toUnit">
+            <option value="siemens">Siemens (S)</option>
+            <option value="milisiemens">Milisiemens (mS)</option>
+            <option value="microsiemens">Microsiemens (µS)</option>
+            <option value="nanosiemens">Nanosiemens (nS)</option>
+            <option value="picosiemens">Picosiemens (pS)</option>
+        </select>
+
+        <br>
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        const conversionRates = {
+            siemens: {
+                milisiemens: 1000,
+                microsiemens: 1000000,
+                nanosiemens: 1000000000,
+                picosiemens: 1000000000000
+            },
+            milisiemens: {
+                siemens: 0.001,
+                microsiemens: 1000,
+                nanosiemens: 1000000,
+                picosiemens: 1000000000
+            },
+            microsiemens: {
+                siemens: 0.000001,
+                milisiemens: 0.001,
+                nanosiemens: 1000,
+                picosiemens: 1000000
+            },
+            nanosiemens: {
+                siemens: 0.000000001,
+                milisiemens: 0.000001,
+                microsiemens: 0.001,
+                picosiemens: 1000
+            },
+            picosiemens: {
+                siemens: 0.000000000001,
+                milisiemens: 0.000000001,
+                microsiemens: 0.000001,
+                nanosiemens: 0.001
+            }
+        };
+
+        const unitLabels = {
+            siemens: "S",
+            milisiemens: "mS",
+            microsiemens: "µS",
+            nanosiemens: "nS",
+            picosiemens: "pS"
+        };
+
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            const result = value * conversionRates[fromUnit][toUnit];
+            document.getElementById("result").textContent = `${result} ${unitLabels[toUnit]}`;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Frecuencia</title>
+    <link rel="stylesheet" href="styleconversores.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Frecuencia</h1>
+        
+        <label for="fromUnit">Selecciona la unidad de origen:</label>
+        <select id="fromUnit">
+            <option value="hertz">Hertz (Hz)</option>
+            <option value="kilohertz">Kilohertz (kHz)</option>
+            <option value="megahertz">Megahertz (MHz)</option>
+            <option value="gigahertz">Gigahertz (GHz)</option>
+            <option value="terahertz">Terahertz (THz)</option>
+            <option value="petahertz">Petahertz (PHz)</option>
+            <option value="milihertz">Milihertz (mHz)</option>
+            <option value="microhertz">Microhertz (µHz)</option>
+        </select>
+
+        <label for="toUnit">Selecciona la unidad de destino:</label>
+        <select id="toUnit">
+            <option value="hertz">Hertz (Hz)</option>
+            <option value="kilohertz">Kilohertz (kHz)</option>
+            <option value="megahertz">Megahertz (MHz)</option>
+            <option value="gigahertz">Gigahertz (GHz)</option>
+            <option value="terahertz">Terahertz (THz)</option>
+            <option value="petahertz">Petahertz (PHz)</option>
+            <option value="milihertz">Milihertz (mHz)</option>
+            <option value="microhertz">Microhertz (µHz)</option>
+        </select>
+
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            let result;
+            let resultUnit;
+
+            if (fromUnit === "hertz") {
+                if (toUnit === "kilohertz") {
+                    result = value / 1000;
+                    resultUnit = "kHz";
+                } else if (toUnit === "megahertz") {
+                    result = value / 1e6;
+                    resultUnit = "MHz";
+                } else if (toUnit === "gigahertz") {
+                    result = value / 1e9;
+                    resultUnit = "GHz";
+                } else if (toUnit === "terahertz") {
+                    result = value / 1e12;
+                    resultUnit = "THz";
+                } else if (toUnit === "petahertz") {
+                    result = value / 1e15;
+                    resultUnit = "PHz";
+                } else if (toUnit === "milihertz") {
+                    result = value * 1000;
+                    resultUnit = "mHz";
+                } else if (toUnit === "microhertz") {
+                    result = value * 1e6;
+                    resultUnit = "µHz";
+                } else {
+                    result = value;
+                    resultUnit = "Hz";
+                }
+            }
+
+            // Similar logic for other units can be added here for conversion
+
+            document.getElementById("result").innerText = `${result} ${resultUnit}`;
+        }
+    </script>
+
+</body>
+</html>

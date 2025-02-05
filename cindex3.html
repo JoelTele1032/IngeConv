@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de Volumen</title>
+    <link rel="stylesheet" href="styleconversores.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Conversor de Volumen</h1>
+        
+        <label for="fromUnit">Selecciona la unidad de origen:</label>
+        <select id="fromUnit">
+            <option value="m3">Metros cúbicos (m³)</option>
+            <option value="litros">Litros (L)</option>
+            <option value="cm3">Centímetros cúbicos (cm³)</option>
+            <option value="mm3">Milímetros cúbicos (mm³)</option>
+            <option value="galon">Galones (gal)</option>
+            <option value="pulg3">Pulgadas cúbicas (in³)</option>
+        </select>
+
+        <label for="toUnit">Selecciona la unidad de destino:</label>
+        <select id="toUnit">
+            <option value="m3">Metros cúbicos (m³)</option>
+            <option value="litros">Litros (L)</option>
+            <option value="cm3">Centímetros cúbicos (cm³)</option>
+            <option value="mm3">Milímetros cúbicos (mm³)</option>
+            <option value="galon">Galones (gal)</option>
+            <option value="pulg3">Pulgadas cúbicas (in³)</option>
+        </select>
+
+        <br>
+        <label for="value">Valor a convertir:</label>
+        <input type="number" id="value" placeholder="Introduce un valor" />
+        
+        <button onclick="convert()">Convertir</button>
+        
+        <div class="result-box">
+            <h2>Resultado:</h2>
+            <p id="result">0</p>
+        </div>
+    </div>
+
+    <script>
+        const conversionRates = {
+            m3: {
+                litros: 1000,
+                cm3: 1000000,
+                mm3: 1000000000,
+                galon: 264.172,
+                pulg3: 61023.7
+            },
+            litros: {
+                m3: 0.001,
+                cm3: 1000,
+                mm3: 1000000,
+                galon: 0.264172,
+                pulg3: 61.0237
+            },
+            cm3: {
+                m3: 0.000001,
+                litros: 0.001,
+                mm3: 1000,
+                galon: 0.000264172,
+                pulg3: 0.0610237
+            },
+            mm3: {
+                m3: 0.000000001,
+                litros: 0.000001,
+                cm3: 0.001,
+                galon: 0.000000264172,
+                pulg3: 0.0000610237
+            },
+            galon: {
+                m3: 0.00378541,
+                litros: 3.78541,
+                cm3: 3785.41,
+                mm3: 3785410,
+                pulg3: 231
+            },
+            pulg3: {
+                m3: 0.0000163871,
+                litros: 0.0163871,
+                cm3: 16.3871,
+                mm3: 16387.1,
+                galon: 0.004329
+            }
+        };
+
+        const unitLabels = {
+            m3: "m³",
+            litros: "L",
+            cm3: "cm³",
+            mm3: "mm³",
+            galon: "gal",
+            pulg3: "in³"
+        };
+
+        function convert() {
+            const fromUnit = document.getElementById("fromUnit").value;
+            const toUnit = document.getElementById("toUnit").value;
+            const value = parseFloat(document.getElementById("value").value);
+            
+            if (isNaN(value)) {
+                alert("Por favor, ingresa un valor válido.");
+                return;
+            }
+
+            const result = value * conversionRates[fromUnit][toUnit];
+            document.getElementById("result").textContent = `${result} ${unitLabels[toUnit]}`;
+        }
+    </script>
+
+</body>
+</html>
